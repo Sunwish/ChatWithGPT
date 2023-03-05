@@ -44,6 +44,10 @@ sendBtn.addEventListener("click", function() {
     })
       .then(response => response.json())
       .then(data => {
+        if(data.error) {
+          throw data.error
+        }
+
         // Remove loading spinner
         messageUl.removeChild(loadingLi);
 
@@ -57,7 +61,7 @@ sendBtn.addEventListener("click", function() {
         aiLi.classList.add("message");
         aiLi.innerHTML = `<span class="nickname">AI</span> <span class="datetime">${new Date().toLocaleString()}</span> <span class="tokencost"> (consumed totally: ${totalTokenCost} tokens | ${totalMoneyCost} ¥)</span><br>${aiMessage}`;
         messageUl.appendChild(aiLi);
-
+        
         // Scroll to the bottom of the message list
         messageList.scrollTop = messageList.scrollHeight;
       })
@@ -65,6 +69,14 @@ sendBtn.addEventListener("click", function() {
         console.error(error);
         // Remove loading spinner
         messageUl.removeChild(loadingLi);
+
+        const aiLi = document.createElement("li");
+        aiLi.classList.add("message");
+        aiLi.innerHTML = `<span class="nickname">Error</span> <span class="datetime">${new Date().toLocaleString()}</span><br><span style="color: red;">${error.message}</span>`;
+        messageUl.appendChild(aiLi);
+
+        // Scroll to the bottom of the message list
+        messageList.scrollTop = messageList.scrollHeight;
       });
 
     messageInput.value = "";
@@ -80,4 +92,5 @@ messageInput.addEventListener("keyup", function(event) {
 
 window.onload = function() {
     document.documentElement.style.setProperty('--message-input-height', messageInput.clientHeight + 'px');
+    messageInput.focus();
 };
