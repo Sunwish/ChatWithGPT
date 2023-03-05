@@ -3,6 +3,7 @@
   <head>
     <title>Chat With GPT!</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
   </head>
   <body>
     <div class="container">
@@ -10,10 +11,13 @@
         <ul id="message-ul"></ul>
       </div>
       <div class="input-box">
-        <input type="text" id="message-input" placeholder="Type your message...">
+        <textarea id="message-input" placeholder="Type your message here..."></textarea>
+        <!--<input type="text" id="message-input" placeholder="Type your message...">-->
         <button id="send-btn">Send</button>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

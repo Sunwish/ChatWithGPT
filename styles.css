@@ -82,3 +82,7 @@ body {
     transform: rotate(360deg);
   }
 }
+
+li.message ul, li.message ol {
+  padding-left: 40px;
+}

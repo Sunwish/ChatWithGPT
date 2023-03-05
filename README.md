@@ -19,3 +19,5 @@
 ## 界面截图：
 
 ![screenshot.png](https://s2.loli.net/2023/03/05/ETNBAzCu6UhLdFg.png)
+
+![screenshot2.png](https://s2.loli.net/2023/03/05/D9LxIjBYXJycMRs.png)

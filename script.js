@@ -15,9 +15,11 @@ sendBtn.addEventListener("click", function() {
     const userMessage = { role: "user", content: message };
     messageHistory.push(userMessage);
 
+    const messageHTML = getMarkedMessageElement(message)
+
     const userLi = document.createElement("li");
     userLi.classList.add("message");
-    userLi.innerHTML = `<span class="nickname">${nickname}</span> <span class="datetime">${datetime}</span><br>${message}`;
+    userLi.innerHTML = `<span class="nickname">${nickname}</span> <span class="datetime">${datetime}</span><br>${messageHTML}`;
     messageUl.appendChild(userLi);
 
     // Show loading spinner
@@ -31,7 +33,7 @@ sendBtn.addEventListener("click", function() {
     const data = {
       model: "gpt-3.5-turbo",
       messages: messageHistory,
-      max_tokens: 200
+      max_tokens: 500
     };
 
     fetch("https://api.openai.com/v1/chat/completions", {
@@ -55,11 +57,13 @@ sendBtn.addEventListener("click", function() {
         const aiMessageObj = { role: "assistant", content: aiMessage };
         messageHistory.push(aiMessageObj);
 
+        const messageHTML = getMarkedMessageElement(aiMessage)
+
         const aiLi = document.createElement("li");
         totalTokenCost += data.usage.total_tokens
         let totalMoneyCost = 0.002 * 7 / 1000 * totalTokenCost
         aiLi.classList.add("message");
-        aiLi.innerHTML = `<span class="nickname">AI</span> <span class="datetime">${new Date().toLocaleString()}</span> <span class="tokencost"> (consumed totally: ${totalTokenCost} tokens | ${totalMoneyCost} ¥)</span><br>${aiMessage}`;
+        aiLi.innerHTML = `<span class="nickname">AI</span> <span class="datetime">${new Date().toLocaleString()}</span> <span class="tokencost"> (consumed totally: ${totalTokenCost} tokens | ${totalMoneyCost} ¥)</span><br>${messageHTML}`;
         messageUl.appendChild(aiLi);
         
         // Scroll to the bottom of the message list
@@ -85,6 +89,10 @@ sendBtn.addEventListener("click", function() {
 });
 
 messageInput.addEventListener("keyup", function(event) {
+	if (event.ctrlKey && event.key === "Enter") {
+		return;
+	}
+
   if (event.key === "Enter") {
     sendBtn.click();
   }
@@ -94,3 +102,12 @@ window.onload = function() {
     document.documentElement.style.setProperty('--message-input-height', messageInput.clientHeight + 'px');
     messageInput.focus();
 };
+
+function getMarkedMessageElement(message) {
+  return marked.parse(message, { 
+    highlight: function(code, lang) {
+      const highlightedCode = lang ? hljs.highlight(lang, code).value : hljs.highlightAuto(code).value;
+      return `<code class="hljs ${lang}">${highlightedCode}</code>`;
+    }
+  });
+}
