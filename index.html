@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
     <title>Chat With GPT!</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
   </head>
   <body>
     <div class="container">
+      <div id="top">小助手</div>
       <div id="message-list">
         <ul id="message-ul"></ul>
       </div>
       <div class="input-box">
         <textarea id="message-input" placeholder="Type your message here..."></textarea>
-        <!--<input type="text" id="message-input" placeholder="Type your message...">-->
+        <input type="password" id="api-key-input" placeholder="OpenAI API Key">
         <button id="send-btn">Send</button>
       </div>
     </div>
+    <button id="save-btn">Save</body>
+    <button id="load-btn">Load</body>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
     <script src="script.js"></script>

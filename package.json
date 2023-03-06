@@ -1,0 +1,27 @@
+{
+  "name": "chatwithgpt",
+  "version": "1.0.0",
+  "description": "项目作者：ChatGPT",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sunwish/ChatWithGPT.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sunwish/ChatWithGPT/issues"
+  },
+  "homepage": "https://github.com/Sunwish/ChatWithGPT#readme",
+  "dependencies": {
+    "koa": "^2.14.1",
+    "koa-body": "^6.0.1",
+    "koa-router": "^12.0.0",
+    "koa-static": "^5.0.0",
+    "koa2-cors": "^2.0.6"
+  }
+}

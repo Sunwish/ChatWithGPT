@@ -8,6 +8,15 @@ body {
   overflow: hidden;
 }
 
+#top {
+  height: 50px;
+  color: white;
+  background-color: #4CAF50;
+  line-height: 50px;
+  text-align: center;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -19,7 +28,7 @@ body {
   padding-bottom: 10px;
   background-color: #f2f2f2;
   /*height: 80%;*/
-  height: calc(100vh - var(--message-input-height));
+  height: calc(100vh - 50px - var(--message-input-height));
   overflow-y: scroll;
 }
 
@@ -36,6 +45,15 @@ body {
   padding: 10px;
   border: none;
   border-radius: 5px;
+  white-space: pre-wrap;
+}
+
+#api-key-input {
+  width: 100px;
+  margin-right: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
 }
 
 #send-btn {
@@ -45,6 +63,23 @@ body {
   background-color: #4CAF50;
   color: white;
   cursor: pointer;
+}
+
+#save-btn, #load-btn {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  right: 10px;
+  bottom: calc(var(--message-input-height) + 36px);
+  border: none;
+  border-radius: 25px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+#load-btn {
+  bottom: calc(var(--message-input-height) + 100px);
 }
 
 .message {

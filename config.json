@@ -1,0 +1,7 @@
+{
+    "dev": {
+        "port": 5050,
+        "chatsDir": "./chats",
+        "templateChatPath": "./chats/template.json"
+    }
+}
