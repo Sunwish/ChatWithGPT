@@ -33,7 +33,7 @@ window.onload = async function () {
   messageInput.focus();
 
   // Load key from cookie
-  apiKeyInput.value = getCookie('key');
+  apiKeyInput.value = localStorage.getItem('key');
 
   // Get config and restore message history
   let chat;
@@ -105,7 +105,7 @@ sendBtn.addEventListener("click", function () {
           throw data.error;
         }
 
-        document.cookie = `key=${key};`;
+        localStorage.setItem('key', key)
 
         // Remove loading spinner
         messageUl.removeChild(loadingLi);
@@ -204,15 +204,6 @@ function messageHistoryToChatObj(history) {
     "prompt": history[0],
     "messages": history.slice(1),
     "memory": 10
-  }
-}
-
-function getCookie(name) {
-  var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-  if (arr = document.cookie.match(reg)) {
-    return decodeURI(arr[2]);
-  } else {
-    return null;
   }
 }
 
