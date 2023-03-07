@@ -44,6 +44,7 @@ router.get('/chat', async ctx => {
 router.post('/save', async ctx => {
     let body = ctx.request.body;
     let chat = JSON.stringify(body.chat);
+    let chatsDir = serverConfig.chatsDir;
     let info = await fs.promises.writeFile(`${chatsDir}/${body.username}/${body.chat.title}.json`, chat, 'utf8')
     .then(() => "Saved!");
     ctx.body = info;

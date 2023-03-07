@@ -65,7 +65,7 @@ body {
   cursor: pointer;
 }
 
-#save-btn, #load-btn {
+#save-btn, #load-btn, #config-btn {
   position: absolute;
   width: 50px;
   height: 50px;
@@ -81,6 +81,11 @@ body {
 #load-btn {
   bottom: calc(var(--message-input-height) + 100px);
 }
+
+#config-btn {
+  bottom: calc(var(--message-input-height) + 164px);
+}
+
 
 .message {
   margin: 10px;
@@ -120,4 +125,70 @@ body {
 
 li.message ul, li.message ol {
   padding-left: 40px;
+}
+
+/* Config box */
+
+#configBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  display: none;
+}
+
+#configBox label {
+  display: inline-block;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+#configBox input {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+#configBox button {
+  margin-top: 20px;
+  padding: 5px 10px;
+  background-color: #008cba;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#configBox h3 {
+  margin: 0;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#configBox select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+#configBox textarea {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  resize: none;
+}
+
+#configBox textarea[disabled] {
+  background-color: #ddd;
+  cursor: default;
 }

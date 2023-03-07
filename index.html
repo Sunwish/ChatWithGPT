@@ -18,8 +18,33 @@
         <button id="send-btn">Send</button>
       </div>
     </div>
-    <button id="save-btn">Save</body>
-    <button id="load-btn">Load</body>
+    <!-- 配置框 -->
+    <div id="configBox">
+      <h3>配置框</h3>
+      <label>聊天标题：</label>
+      <input type="text" id="configTitle" />
+      <br />
+      <label>用户昵称：</label>
+      <input type="text" id="configUserNickname" />
+      <br />
+      <label>AI昵称：</label>
+      <input type="text" id="configAINickname" />
+      <br />
+      <label>记忆条数：</label>
+      <input type="number" id="configMemoryCount" pattern="[0-9]*" oninput="value=value.replace(/[^\d]/g,'')"/>
+      <br />
+      <label>AI设定：</label>
+      <select id="situationSelect">
+      </select>
+      <br />
+      <textarea id="situationTextarea" rows="3" disabled></textarea>
+      <p style="color: red;">注意，修改AI设定将清除聊天历史</p>
+      <button id="confirmBtn">确认</button>
+      <button id="cancelBtn">取消</button>
+    </div>
+    <button id="save-btn">Save</button>
+    <button id="load-btn">Load</button>
+    <button id="config-btn">Conf</button>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
     <script src="script.js"></script>
