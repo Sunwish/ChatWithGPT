@@ -2,6 +2,21 @@
     "dev": {
         "port": 5050,
         "chatsDir": "./chats",
-        "templateChatPath": "./chats/template.json"
+        "templateChatPath": "./chats/template.json",
+        "api": {
+            "path": "https://api.openai.com/v1/chat/completions"
+        },
+        "proxy": {
+            "host": "localhost",
+            "port": 1086
+        }
+    },
+    "product": {
+        "port": 5050,
+        "chatsDir": "./chats",
+        "templateChatPath": "./chats/template.json",
+        "api": {
+            "path": "https://api.openai.com/v1/chat/completions"
+        }
     }
 }

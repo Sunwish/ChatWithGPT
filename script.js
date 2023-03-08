@@ -24,23 +24,28 @@ var chatConfig = {
 const characteristics = [
   {
     name: '默认',
-    prompt: 'You are a helpful assistant.'
+    prompt: 'You are a helpful assistant.',
+    memory: 10
   },
   {
     name: '自定义',
-    prompt: ''
+    prompt: '',
+    memory: 10
   },
   {
     name: '中英翻译',
-    prompt: 'I want you to act as an English And Chinese translator, spelling corrector and improver. I will speak to you in Chinese or English and you will detect the language, translate it and answer in the corrected and improved version of my text, in English when I speak Chinese to you, or in Chinese when I speak English to you. I want you to replace my simplified A0-level words and sentences with more beautiful and elegant, upper level English or Chinese words and sentences. Keep the meaning same, but make them more literary. I want you to only reply the correction, the improvements and nothing else, do not write explanations. '
+    prompt: 'I want you to act as an English And Chinese translator, spelling corrector and improver. I will speak to you in Chinese or English and you will detect the language, translate it and answer in the corrected and improved version of my text, in English when I speak Chinese to you, or in Chinese when I speak English to you. I want you to replace my simplified A0-level words and sentences with more beautiful and elegant, upper level English or Chinese words and sentences. Keep the meaning same, but make them more literary. I want you to only reply the correction, the improvements and nothing else, do not write explanations. ',
+    memory: 0
   },
   {
     name: 'Emoji翻译',
-    prompt: `从现在开始，你的回答必须把所有字逐字地替换成emoji，并保持原来的含义。替换过程中你不能跳过任何字，不能使用任何汉字或英文。如果有的字没有合适的emoji，则将他们替换成谐音字的emoji。下面是一个例子：\n\n原文：爷吐啦\n\n翻译：👴🐰🌶️`
+    prompt: `从现在开始，你的回答必须把所有字逐字地替换成emoji，并保持原来的含义。替换过程中你不能跳过任何字，不能使用任何汉字或英文。如果有的字没有合适的emoji，则将他们替换成谐音字的emoji。下面是一个例子：\n\n原文：爷吐啦\n\n翻译：👴🐰🌶️`,
+    memory: 0
   },
   {
     name: 'Emoji逆向',
-    prompt: `从现在开始，你的回答必须把我发送的所有emoji逐个地替换成汉字，尽可能每个emoji只替换成单个汉字，要使得转换完毕的汉字组成的句子是通顺的。替换过程中你不能跳过任何emoji，每个emoji替换得到的汉字允许是该emoji所蕴含的意思的同音字或谐音字以确保结果句通顺。下面是一个例子：\n\n原文：👴🐰🌶️\n\n翻译：爷吐啦`
+    prompt: `从现在开始，你的回答必须把我发送的所有emoji逐个地替换成汉字，尽可能每个emoji只替换成单个汉字，要使得转换完毕的汉字组成的句子是通顺的。替换过程中你不能跳过任何emoji，每个emoji替换得到的汉字允许是该emoji所蕴含的意思的同音字或谐音字以确保结果句通顺。下面是一个例子：\n\n原文：👴🐰🌶️\n\n翻译：爷吐啦`,
+    memory: 0
   }
 ];
 let totalTokenCost = 0;
@@ -66,7 +71,7 @@ window.onload = async function () {
   document.documentElement.style.setProperty('--message-input-height', messageInput.clientHeight + 'px');
   messageInput.focus();
 
-  // Load key from cookie
+  // Load key from localStorage
   apiKeyInput.value = localStorage.getItem('key');
 
   // Get config and restore message history
@@ -128,7 +133,8 @@ sendBtn.addEventListener("click", function () {
     };
 
     let key = apiKeyInput.value;
-    fetch("https://api.openai.com/v1/chat/completions", {
+    //fetch("https://api.openai.com/v1/chat/completions", {
+    fetch("/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -351,6 +357,7 @@ configBtn.addEventListener('click', (e) => {
 characteristicSelect.addEventListener('change', (e) => {
   const selectedValue = e.target.value;
   characteristicTextarea.value = characteristics[selectedValue].prompt;
+  configMemoryCount.value = characteristics[selectedValue].memory;
   characteristicTextarea.disabled = !(characteristics[e.target.value].prompt == '');
 });
 // 点击确认按钮
