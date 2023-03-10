@@ -8,8 +8,9 @@
 
 本项目为基于 HTML+CSS+JS 的极简 ChatGPT 聊天应用，支持连续对话，每条对话后显示全程消耗的总token数和估算的总金钱开销。本应用 90% 的代码均由 ChatGPT 生成，另有 10% 的人工干涉。
 
-## 把玩步骤
+## 把玩方式
 
+- 直接体验：https://chat.houkaifa.com/
 - no-server 模式：
   1. 克隆本仓库：`git clone https://github.com/Sunwish/ChatWithGPT.git`
   2. 打开 `index.html` 文件，输入 OpenAI APK Key，开始聊天！
