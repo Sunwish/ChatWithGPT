@@ -76,8 +76,8 @@ router.post('/completions', async ctx => {
     if(httpsProxyAgent) { options.agent = httpsProxyAgent }
     await fetch(serverConfig.api.path, options)
     .then(response => response.json())
-    .then(res => { ctx.body = res; console.log(res); })
-    .catch(err => { ctx.body = err; console.log(err); })
+    .then(res => { ctx.body = res; })
+    .catch(err => { ctx.body = err; })
 })
 
 server.listen(serverConfig.port, () => {

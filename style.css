@@ -9,6 +9,9 @@ body {
 }
 
 #top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 50px;
   color: white;
   background-color: #4CAF50;
@@ -54,6 +57,15 @@ body {
   padding: 10px;
   border: none;
   border-radius: 5px;
+}
+
+#clear-btn {
+  position: absolute;
+  right: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
 }
 
 #send-btn {

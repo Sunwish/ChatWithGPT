@@ -5,10 +5,14 @@
     <title>Chat With GPT!</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <div class="container">
-      <div id="top">小助手</div>
+      <div id="top">
+        <span id="title"></span>
+        <button id="clear-btn"><i class="fa fa-trash fa-2x"></i></button>
+      </div>
       <div id="message-list">
         <ul id="message-ul"></ul>
       </div>
@@ -42,9 +46,9 @@
       <button id="confirmBtn">确认</button>
       <button id="cancelBtn">取消</button>
     </div>
-    <button id="save-btn">Save</button>
-    <button id="load-btn">Load</button>
-    <button id="config-btn">Conf</button>
+    <button id="config-btn"><i class="fa fa-gear fa-2x"></i></button>
+    <button id="load-btn"><i class="fa fa-folder-open fa-2x"></i></button>
+    <button id="save-btn"><i class="fa fa-download fa-2x"></i></button>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
     <script src="script.js"></script>

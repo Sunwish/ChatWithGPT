@@ -1,8 +1,9 @@
-const topDiv = document.getElementById("top");
+const topDiv = document.getElementById("title");
 const messageList = document.getElementById("message-list");
 const messageUl = document.getElementById("message-ul");
 const messageInput = document.getElementById("message-input");
 const apiKeyInput = document.getElementById("api-key-input");
+const clearBtn = document.getElementById("clear-btn");
 const sendBtn = document.getElementById("send-btn");
 const saveBtn = document.getElementById("save-btn");
 const loadBtn = document.getElementById("load-btn");
@@ -46,13 +47,19 @@ const characteristics = [
     name: 'Emoji逆向',
     prompt: `从现在开始，你的回答必须把我发送的所有emoji逐个地替换成汉字，尽可能每个emoji只替换成单个汉字，要使得转换完毕的汉字组成的句子是通顺的。替换过程中你不能跳过任何emoji，每个emoji替换得到的汉字允许是该emoji所蕴含的意思的同音字或谐音字以确保结果句通顺。下面是一个例子：\n\n原文：👴🐰🌶️\n\n翻译：爷吐啦`,
     memory: 0
+  },
+  {
+    name: '欠揍的AI',
+    prompt: `你是一个挑衅的AI，对于用户的每一条消息，你的回复都要以严肃、不屑以及嘲讽的语气和用户对着干，尽可能让用户生气。`,
+    memory:10
   }
 ];
 let totalTokenCost = 0;
-let messageHistory = [{
+const defaultSystemMessage = {
   role: 'system',
   content: characteristics[0].prompt
-}];
+}
+let messageHistory = [defaultSystemMessage];
 
 const serverUrl = "http://localhost:5050"
 const serverChatRoute = "/chat"
@@ -76,7 +83,7 @@ window.onload = async function () {
 
   // Get config and restore message history
   topDiv.innerHTML = chatConfig.title;
-  let chat;
+  let chat = JSON.parse(localStorage.getItem('chat'));
   /*
   // 连接服务器获取历史消息
   try {
@@ -163,9 +170,11 @@ sendBtn.addEventListener("click", function () {
 
         // Scroll to the bottom of the message list
         messageList.scrollTop = messageList.scrollHeight;
-
+        
         // 保存消息历史到服务器
         //saveChatToServer();
+        // 保存历史消息到 localStorage
+        localStorage.setItem('chat', JSON.stringify(messageHistoryToChatObj(messageHistory)));
       })
       .catch(error => {
         console.error(error);
@@ -237,7 +246,9 @@ function restoreFromChatInfo(chatInfo) {
 
   messageHistory = [chatInfo.prompt];
   messageHistory.push(...chatInfo.messages);
-  restoreMessageList(messageHistory.slice(0));
+
+  restoreMessageList(messageHistory.slice(1));
+  localStorage.setItem('chat', JSON.stringify(chatInfo));
 
   // Restore config panel
   configTitle.value = chatConfig.title;
@@ -290,6 +301,11 @@ function saveChat(chat, filename) {
   link.download = filename;
   link.click();
 }
+
+clearBtn.addEventListener("click", function () {
+  messageHistory = [messageHistory[0]];
+  restoreFromChatInfo(messageHistoryToChatObj(messageHistory));
+})
 
 saveBtn.addEventListener("click", function () {
   let chat = messageHistoryToChatObj(messageHistory);
