@@ -78,12 +78,16 @@ window.onload = async function () {
   document.documentElement.style.setProperty('--message-input-height', messageInput.clientHeight + 'px');
   messageInput.focus();
 
-  // Load key from localStorage
-  apiKeyInput.value = localStorage.getItem('key');
+  // Load key from sessionStorage
+  apiKeyInput.value = localStorage.getItem('key'); // 保留过渡一下，防止老用户的本地数据因未转存到sessionStorage中而丢失
+  let key_sessionStorage = sessionStorage.getItem('key');
+  if(key_sessionStorage != null) { apiKeyInput.value = key_sessionStorage; }
 
   // Get config and restore message history
   topDiv.innerHTML = chatConfig.title;
-  let chat = JSON.parse(localStorage.getItem('chat'));
+  let chat = JSON.parse(localStorage.getItem('chat')); // 保留过渡一下，防止老用户的本地数据因未转存到sessionStorage中而丢失
+  let chat_sessionStorage = sessionStorage.getItem('chat');
+  if(chat_sessionStorage != null) { chat = JSON.parse(chat_sessionStorage); }
   /*
   // 连接服务器获取历史消息
   try {
@@ -156,7 +160,7 @@ sendBtn.addEventListener("click", function () {
           throw data.error;
         }
 
-        localStorage.setItem('key', key)
+        sessionStorage.setItem('key', key)
 
         // Remove loading spinner
         messageUl.removeChild(loadingLi);
@@ -173,8 +177,8 @@ sendBtn.addEventListener("click", function () {
         
         // 保存消息历史到服务器
         //saveChatToServer();
-        // 保存历史消息到 localStorage
-        localStorage.setItem('chat', JSON.stringify(messageHistoryToChatObj(messageHistory)));
+        // 保存历史消息到 sessionStorage
+        sessionStorage.setItem('chat', JSON.stringify(messageHistoryToChatObj(messageHistory)));
       })
       .catch(error => {
         console.error(error);
@@ -248,7 +252,7 @@ function restoreFromChatInfo(chatInfo) {
   messageHistory.push(...chatInfo.messages);
 
   restoreMessageList(messageHistory.slice(1));
-  localStorage.setItem('chat', JSON.stringify(chatInfo));
+  sessionStorage.setItem('chat', JSON.stringify(chatInfo));
 
   // Restore config panel
   configTitle.value = chatConfig.title;
