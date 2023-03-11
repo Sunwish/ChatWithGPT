@@ -1,0 +1,57 @@
+name: Deploy
+
+# 在master分支push操作后触发该流程
+on: 
+  push:
+    branches: 
+      - master
+
+jobs:
+  deploy:
+    
+    runs-on: ubuntu-latest
+
+    steps:
+    # 一个让你的workflow能够访问到你仓库的actions
+    - name: Checkout
+      uses: actions/checkout@master 
+
+    # 指定环境 Node.js v12
+    - name: Use Node.js 12
+      uses: actions/setup-node@master
+      with:
+        node-version: '12.x'
+    
+    # 在GitHub服务器打包
+    - name: Install npm dependencies
+      run: |
+        npm install
+
+    # 将打包结果拉至服务器
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@main
+      env:
+          # 服务器私钥
+          SSH_PRIVATE_KEY: ${{ secrets.SUNWISH_SERVER_KEY }}
+          # 服务器地址
+          REMOTE_HOST: ${{ secrets.SUNWISH_SERVER_IP }}
+          # 服务器ssh端口
+          REMOTE_PORT: ${{ secrets.SUNWISH_SERVER_SSH_PORT }}
+          # 登录账户
+          REMOTE_USER: ${{ secrets.SUNWISH_SERVER_USERNAME }}
+          # 服务器存储位置
+          TARGET: '/home/websites/ChatWithGPT'
+    
+    # 运行
+    - name: Run on Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SUNWISH_SERVER_IP }}
+        username: ${{ secrets.SUNWISH_SERVER_USERNAME }}
+        key: ${{ secrets.SUNWISH_SERVER_KEY }}
+        port: ${{ secrets.SUNWISH_SERVER_SSH_PORT }}
+        script: |
+          cd /home/websites/ChatWithGPT
+          kill -9 `lsof -i :5050 | awk '{print $2}' | awk 'NR==2{print}'`
+          nohup node /home/websites/ChatWithGPT/app.js >> output.log 2>&1 &
+          exit
