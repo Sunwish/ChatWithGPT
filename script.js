@@ -108,7 +108,7 @@ sendBtn.addEventListener("click", function () {
     const data = {
       model: "gpt-3.5-turbo",
       messages: requestMessages,
-      max_tokens: 500
+      max_tokens: 2048
     };
 
     let key = apiKeyInput.value;
@@ -221,6 +221,7 @@ function restoreFromChatInfo(chatInfo) {
 
   restoreMessageList(messageHistory.slice(1));
   sessionStorage.setItem('chat', JSON.stringify(chatInfo));
+  localStorage.removeItem('chat');
 
   // Restore config panel
   configTitle.value = chatConfig.title;
@@ -240,7 +241,8 @@ function restoreFromChatInfo(chatInfo) {
       }
     })
     if(!matched) {
-      characteristicSelect.value = 2;
+      characteristicSelect.value = 1;
+      characteristicTextarea.disabled = false;
       characteristicTextarea.value = messageHistory[0].content;
     }
   }
@@ -337,9 +339,11 @@ characteristics.forEach((situation, i) => {
 characteristicTextarea.value = characteristics[0].prompt;
 // 点击配置按钮
 var selectedIndexBackup = 0;
+var promptAreaDisableBackup = true;
 configBtn.addEventListener('click', (e) => {
   // 显示配置框
   configBox.style.display = 'block';
+  promptAreaDisableBackup = characteristicTextarea.disabled;
 });
 // 情况选项变化时更新描述文本框的值
 characteristicSelect.addEventListener('change', (e) => {
@@ -403,4 +407,5 @@ cancelBtn.addEventListener('click', (e) => {
   configMemoryCount.value = parseInt(chatConfig.memory);
   characteristicTextarea.value = chatConfig.characteristic;
   characteristicSelect.options[selectedIndexBackup].selected = true;
+  characteristicTextarea.disabled = promptAreaDisableBackup;
 });
