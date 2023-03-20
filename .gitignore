@@ -1,5 +1,6 @@
 config_*.json
 chats/*/
+.DS*
 
 # Logs
 logs

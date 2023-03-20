@@ -3,6 +3,7 @@ const messageList = document.getElementById("message-list");
 const messageUl = document.getElementById("message-ul");
 const messageInput = document.getElementById("message-input");
 const apiKeyInput = document.getElementById("api-key-input");
+const githubBtn = document.getElementById("github-btn");
 const clearBtn = document.getElementById("clear-btn");
 const sendBtn = document.getElementById("send-btn");
 const saveBtn = document.getElementById("save-btn");
@@ -14,13 +15,15 @@ const configAINickname = document.getElementById('configAINickname');
 const configMemoryCount = document.getElementById('configMemoryCount');
 const characteristicSelect = document.getElementById('situationSelect');
 const characteristicTextarea = document.getElementById('situationTextarea');
+const configMaxToken = document.getElementById('configMaxToken');
 
 var chatConfig = {
   title: "小助手",
   userNickname: "Sunwish",
   aiNickname: "AI",
   characteristic: "You are a helpful assistant.",
-  memory: 10
+  memory: 10,
+  maxToken: 2048
 };
 let totalTokenCost = 0;
 const defaultSystemMessage = {
@@ -82,6 +85,10 @@ window.onload = async function () {
   messageList.scrollTop = messageList.scrollHeight;
 };
 
+githubBtn.addEventListener("click", function() {
+  window.open("https://github.com/Sunwish/ChatWithGPT");
+});
+
 sendBtn.addEventListener("click", function () {
   const message = messageInput.value;
 
@@ -108,7 +115,7 @@ sendBtn.addEventListener("click", function () {
     const data = {
       model: "gpt-3.5-turbo",
       messages: requestMessages,
-      max_tokens: 2048
+      max_tokens: chatConfig.maxToken
     };
 
     let key = apiKeyInput.value;
@@ -337,14 +344,21 @@ characteristics.forEach((situation, i) => {
 });
 
 characteristicTextarea.value = characteristics[0].prompt;
+configMaxToken.value = chatConfig.maxToken;
 // 点击配置按钮
 var selectedIndexBackup = 0;
 var promptAreaDisableBackup = true;
 configBtn.addEventListener('click', (e) => {
-  // 显示配置框
-  configBox.style.display = 'block';
-  promptAreaDisableBackup = characteristicTextarea.disabled;
+  // 如果配置框已经显示了，就隐藏配置框
+  if(configBox.style.display == 'block') {
+    configBox.style.display = 'none';
+  } else {
+    // 显示配置框
+    configBox.style.display = 'block';
+    promptAreaDisableBackup = characteristicTextarea.disabled;
+  }
 });
+
 // 情况选项变化时更新描述文本框的值
 characteristicSelect.addEventListener('change', (e) => {
   const selectedValue = e.target.value;
@@ -366,12 +380,14 @@ confirmBtn.addEventListener('click', (e) => {
   const characteristicDescription = characteristicTextarea.value;
   let userNicknameChanged = userNickname != chatConfig.userNickname;
   let aiNicknameChanged = aiNickname != chatConfig.aiNickname;
+  let maxTokenChanged = document.getElementById('configMaxToken').value != chatConfig.maxToken;
   // 修改聊天标题、昵称和AI设定
   topDiv.innerHTML = title;
   chatConfig.title = title;
   chatConfig.userNickname = userNickname;
   chatConfig.aiNickname = aiNickname;
   chatConfig.memory = parseInt(memoryCount);
+  chatConfig.maxToken = document.getElementById('configMaxToken').value;
   if(0 == messageHistory.length) { messageHistory.push({content: ""}); }
   if(messageHistory[0].content != characteristicDescription) {
     // 修改了AI设定，重制聊天记录
@@ -393,6 +409,9 @@ confirmBtn.addEventListener('click', (e) => {
       element.innerHTML = aiNickname;
     }
   }
+  if(maxTokenChanged){
+    chatConfig.maxToken = document.getElementById('configMaxToken').value;
+  }
   // 隐藏配置框
   configBox.style.display = 'none';
 });
@@ -408,4 +427,5 @@ cancelBtn.addEventListener('click', (e) => {
   characteristicTextarea.value = chatConfig.characteristic;
   characteristicSelect.options[selectedIndexBackup].selected = true;
   characteristicTextarea.disabled = promptAreaDisableBackup;
+  configMaxToken.value = chatConfig.maxToken;
 });

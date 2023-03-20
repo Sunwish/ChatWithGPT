@@ -10,6 +10,7 @@
   <body>
     <div class="container">
       <div id="top">
+        <button id="github-btn" href="https://github.com/"><i class="fa fa-github fa-2x"></i></button>
         <span id="title"></span>
         <button id="clear-btn"><i class="fa fa-trash fa-2x"></i></button>
       </div>
@@ -36,6 +37,9 @@
       <br />
       <label>记忆条数：</label>
       <input type="number" id="configMemoryCount" pattern="[0-9]*" oninput="value=value.replace(/[^\d]/g,'')"/>
+      <br />
+      <label>max_token：</label>
+      <input type="number" id="configMaxToken" min="1" max="4096" pattern="[0-9]*" oninput="value=value.replace(/[^\d]/g,'')"/>
       <br />
       <label>AI设定：</label>
       <select id="situationSelect">
