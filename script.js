@@ -115,7 +115,7 @@ sendBtn.addEventListener("click", function () {
     const data = {
       model: "gpt-3.5-turbo",
       messages: requestMessages,
-      max_tokens: chatConfig.maxToken
+      max_tokens: parseInt(chatConfig.maxToken)
     };
 
     let key = apiKeyInput.value;
